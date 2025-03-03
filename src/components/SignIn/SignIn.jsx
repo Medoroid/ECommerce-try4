@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { useFormik } from 'formik'
-import React, { useContext, useEffect, useState } from 'react'
+import  { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import * as Yup from "yup"
 import { ColorRing } from 'react-loader-spinner'
@@ -28,15 +28,16 @@ let  navigate = useNavigate()
         console.log("success")
         localStorage.setItem("userToken", respones?.data?.token )
         setUserLogin(respones?.data?.token)
-        navigate('/Home')
+        navigate('https://youtu.be/CNisYGc4P6U?si=SWgqZqikMB58UIRU')
       }
     console.log(respones.data.token)
     })
       // fi error
-      .catch((respones)=>{
+      .catch((response)=>{
         setLoading(false)
-        console.log(respones?.response?.data?.message)
-        setAbiError(respones?.response?.data?.message)
+        // console.log(response?.response?.data?.message)
+        setAbiError(response?.response?.data?.message)
+        console.log(apiError)
       })
   }
 

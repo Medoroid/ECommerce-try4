@@ -1,9 +1,9 @@
 import axios from 'axios';
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import Spinner from '../Spinner/Spinner';
 import CategoureSlider from '../CategoureSlider/CategoureSlider';
 import MainSlider from '../MainSlider/MainSlider';
-import { data, Link } from 'react-router-dom';
+import {  Link } from 'react-router-dom';
 import { CartContext } from '../../Context/CartContext/CartContext';
 import toast from 'react-hot-toast';
 import { useQuery } from '@tanstack/react-query';
@@ -30,7 +30,7 @@ async function addToCartFromBtn(id) {
 
 }
 
-  let [Products, setProducts] = useState(null); // حددنا القيمة الأولية بـ null بدلاً من []
+  // let [Products, setProducts] = useState(null); // حددنا القيمة الأولية بـ null بدلاً من []
 //   async function getallproducts() {
 //     let { data } = await axios.get("https://ecommerce.routemisr.com/api/v1/products");
 //     setProducts(data.data);
@@ -40,7 +40,7 @@ function getallproducts(){
 } 
 
 
-let {data , isLoading,isError,isFetching,refetch} = useQuery({
+let {data , isLoading,refetch} = useQuery({
   queryKey:['getallproducts' ],
   queryFn:getallproducts,
   //عند فتح تاب اخرى والعوده يقوم بعمل refichمره اخرى
@@ -62,7 +62,7 @@ let {data , isLoading,isError,isFetching,refetch} = useQuery({
   //عمل اى عمليات على البيانات مثل fillter
   select:(data)=>{return data?.data?.data},
   //ايقاف عمل fetch تلقايا
-  enabled:false
+  enabled:true
 })
 
   useEffect(() => {
@@ -80,7 +80,7 @@ let {data , isLoading,isError,isFetching,refetch} = useQuery({
       <button className='bg-emerald-400 p-2' onClick={()=>{refetch()}}>fetch your data</button>
         <div className="container mx-auto max-w-7xl">
           <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-3">
-            {data?.map((element, index) => (
+            {data?.map((element) => (
               <div key={element._id} className="card w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm">
               <Link to={`/productdetails/${element._id}`}>
               
@@ -101,7 +101,7 @@ let {data , isLoading,isError,isFetching,refetch} = useQuery({
              
         
              
-                    <Link className='text-4xl text-red-400'><i class="fa-regular fa-heart"></i></Link>
+                    <Link className='text-4xl text-red-400'><i className="fa-regular fa-heart"></i></Link>
                   </div>
                   </Link>
                     <button onClick={()=>{addToCartFromBtn(element._id)}} className="text-white w-full mt-3 bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" >
@@ -116,4 +116,5 @@ let {data , isLoading,isError,isFetching,refetch} = useQuery({
    
     </div> 
   </>;
+  // ///////////////////////////////////
 }

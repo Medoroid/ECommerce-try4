@@ -1,6 +1,5 @@
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
-import { data } from "react-router-dom";
 
 export let CartContext = createContext()
 
