@@ -7,8 +7,11 @@ import { data, Link } from 'react-router-dom';
 import { CartContext } from '../../Context/CartContext/CartContext';
 import toast from 'react-hot-toast';
 import { useQuery } from '@tanstack/react-query';
+import { useSelector } from 'react-redux';
 
 export default function Home() {
+  let {jop}= useSelector((x)=>{return x.user})
+console.log(jop)
  let {addToCart}= useContext(CartContext)
  //لعمل المهام المطلوبه عند نداء func
 async function addToCartFromBtn(id) {
@@ -37,13 +40,29 @@ function getallproducts(){
 } 
 
 
-let {data , isLoading,isError,isFetching} = useQuery({
-  queryKey:'getallproducts' ,
+let {data , isLoading,isError,isFetching,refetch} = useQuery({
+  queryKey:['getallproducts' ],
   queryFn:getallproducts,
   //عند فتح تاب اخرى والعوده يقوم بعمل refichمره اخرى
   refetchOnWindowFocus:false,
   //عند فتح صفه اخرى فى نفس الموقع"الدحول فى مرحلة mounting" والعوده يقوم بعمل refichمره اخرى
   refetchOnMount:true,
+  //عدد محاولات عمل fich قبل عرض error
+  retry:3,
+  //المده الزمنيه بين كل محاوله
+  retryDelay:2000,
+  //الوقت الذى تصبح عنده البيانات قديمه
+  staleTime:10000,
+  //الوقت بين كل fetch والاخر (لعمل تحديث للبيانات كل فتره)
+  refetchInterval:30000,
+  //عمل fetch فى الخلفيه
+  refetchIntervalInBackground:true,
+  //وقت احتفاظ بالبيانات دون تجديدها حتى عند الخروج من الصفحه
+  gcTime:30000,
+  //عمل اى عمليات على البيانات مثل fillter
+  select:(data)=>{return data?.data?.data},
+  //ايقاف عمل fetch تلقايا
+  enabled:false
 })
 
   useEffect(() => {
@@ -56,10 +75,12 @@ let {data , isLoading,isError,isFetching} = useQuery({
     <div className="Home overflow-hidden">
       <MainSlider></MainSlider>
       <CategoureSlider></CategoureSlider>
-      
+      {/* عمل fetch  */}
+      {jop}
+      <button className='bg-emerald-400 p-2' onClick={()=>{refetch()}}>fetch your data</button>
         <div className="container mx-auto max-w-7xl">
           <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-3">
-            {data?.data?.data?.map((element, index) => (
+            {data?.map((element, index) => (
               <div key={element._id} className="card w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm">
               <Link to={`/productdetails/${element._id}`}>
               

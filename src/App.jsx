@@ -18,13 +18,11 @@ import Categories from './components/Categories/Categories'
 import Brands from './components/Brands/Brands'
 // Context improts
 import {
-  useQuery,
-  useMutation,
-  useQueryClient,
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query'
-
+import { Provider } from 'react-redux'
+import {store} from './lib/redux/store'
 //react Query
 
 export default function App() {
@@ -45,6 +43,7 @@ let routs = createBrowserRouter([
     ] }
 ])
   return <>
+<Provider store={store}>
 <QueryClientProvider client={client} >
 <CartProvider>
     <UserProvider>
@@ -56,6 +55,7 @@ let routs = createBrowserRouter([
     </UserProvider>
   </CartProvider>
 </QueryClientProvider>
+</Provider>
     </>
 }
 
