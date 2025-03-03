@@ -40,11 +40,12 @@ export default function SignIn() {
           console.log("Login successful")
           localStorage.setItem("userToken", response.data.token)
           setUserLogin(response.data.token)
-
+          console.log('ok')
+   navigate('/home')
           // التحقق من تحميل بيانات السلة بدون مشاكل
-          getCardItems()
-            .then(() => navigate('')) // توجيه المستخدم إلى الصفحة الرئيسية بعد تسجيل الدخول
+          getCardItems() // توجيه المستخدم إلى الصفحة الرئيسية بعد تسجيل الدخول
             .catch(err => console.error("Error in getCardItems:", err))
+         
         }
       })
       .catch((error) => {
