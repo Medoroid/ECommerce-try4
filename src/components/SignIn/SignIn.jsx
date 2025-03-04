@@ -40,7 +40,7 @@ export default function SignIn() {
           console.log("Login successful")
           localStorage.setItem("userToken", response.data.token)
           setUserLogin(response.data.token)
-          console.log('ok')
+          console.log(response.data.token)
    navigate('/home')
           // التحقق من تحميل بيانات السلة بدون مشاكل
           getCardItems() // توجيه المستخدم إلى الصفحة الرئيسية بعد تسجيل الدخول

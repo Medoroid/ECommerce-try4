@@ -1,19 +1,20 @@
-import { createContext, useEffect } from "react";
-import { useState } from "react";
-export let UserContext = createContext(0)
+import { createContext, useEffect, useState } from "react";
 
-export function UserProvider({children}){
-let [userLogin , setUserLogin] = useState(null)
-// على شان نهنديل الreload الى بيحصل بعد التسجيل
-// ويفضل مسجل لاحد ما انت تعمل تسجسل خروج
-useEffect(()=>{
-    if(localStorage.getItem('userToken')!==null){
-        setUserLogin(localStorage.getItem('userToken'))
+export const UserContext = createContext(null);
+
+export function UserProvider({ children }) {
+  const [userLogin, setUserLogin] = useState(() => localStorage.getItem("userToken") || null);
+
+  useEffect(() => {
+    const token = localStorage.getItem("userToken");
+    if (token) {
+      setUserLogin(token);
     }
-},[])
-    return<>
-    <UserContext.Provider value={{userLogin , setUserLogin}}>
-        {children}
+  }, []);
+
+  return (
+    <UserContext.Provider value={{ userLogin, setUserLogin }}>
+      {children}
     </UserContext.Provider>
-    </>
+  );
 }

@@ -76,8 +76,7 @@ export default function SignUp() {
     };
   }, []);
 
-  return (
-    <>
+  return <>
       <form className="max-w-md mx-auto" onSubmit={formik.handleSubmit}>
         <div className="relative z-0 w-full mb-5 group">
           <input type="text" name="name" value={formik.values.name} onChange={formik.handleChange} onBlur={formik.handleBlur} id="name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 dark:focus:border-green-500 focus:outline-none focus:ring-0 focus:border-green-600 peer" placeholder=" "/>
@@ -211,5 +210,5 @@ export default function SignUp() {
         </button>
       </form>
     </>
-  );
+  
 }
